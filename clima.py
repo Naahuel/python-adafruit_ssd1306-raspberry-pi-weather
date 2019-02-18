@@ -103,16 +103,21 @@ def update_clima():
         timer_start = time.time()
 
 def display_clima():
-    global result, segundos_x_pantalla;
+    global result, segundos_x_pantalla
     fontsize = 75
+    fontsizes2 = 45
     fontsizes = 30
+    fontsizexs = 14
     font     = ImageFont.truetype('./UbuntuMono-Bold.ttf', fontsize)
     fonts    = ImageFont.truetype('./UbuntuMono-Bold.ttf', fontsizes)
+    fonts2   = ImageFont.truetype('./UbuntuMono-Bold.ttf', fontsizes2)
+    fontxs   = ImageFont.truetype('./UbuntuMono-Bold.ttf', fontsizexs)
 
-    icon = Image.open('icons/' + result["currently"]["icon"] + '.ppm').convert('1')
-
-    # Show icon
+    # Show today icon
     clear_image()
+    icon = Image.open('icons/' + result["currently"]["icon"] + '.ppm').convert('1')
+    drawIcon = ImageDraw.Draw(icon)
+    drawIcon.text((x, top), result["currently"]["summary"] ,  font=fontxs, fill=255)
     show_image(icon)
     time.sleep(segundos_x_pantalla)
 
@@ -130,6 +135,59 @@ def display_clima():
     draw.text((x + 90, top + 35), "st",  font=fonts, fill=255)
     show_image()
     time.sleep(segundos_x_pantalla)
+
+    # Tomorrow icon
+    clear_image()
+    icon = Image.open('icons/' + result["daily"]["data"][1]["icon"] + '.ppm').convert('1')
+    drawIcon = ImageDraw.Draw(icon)
+    drawIcon.text((x, top), u'Mañana:',  font=fontxs, fill=255)
+    show_image(icon)
+    time.sleep(segundos_x_pantalla)
+
+    # Tomorrow HIGH temperature
+    clear_image()
+    draw.text((x, top), u'Mañana máxima:',  font=fontxs, fill=255)
+    draw.text((x + 5, top + 2), str(int(result["daily"]["data"][1]["temperatureHigh"])),  font=font, fill=255)
+    draw.text((x + 90, top + 10), u"°C",  font=fonts, fill=255)
+    show_image()
+    time.sleep(segundos_x_pantalla)
+
+    # Tomorrow apparent HIGH temperature
+    clear_image()
+    draw.text((x, top), u'Mañana máxima:',  font=fontxs, fill=255)
+    draw.text((x + 5, top + 2), str(int(result["daily"]["data"][1]["apparentTemperatureHigh"])),  font=font, fill=255)
+    draw.text((x + 90, top + 10), u"°C",  font=fonts, fill=255)
+    draw.text((x + 90, top + 37), "st",  font=fonts, fill=255)
+    show_image()
+    time.sleep(segundos_x_pantalla)
+
+    # Tomorrow Low temperature
+    clear_image()
+    draw.text((x, top), u'Mañana mínima:',  font=fontxs, fill=255)
+    draw.text((x + 5, top + 2), str(int(result["daily"]["data"][1]["temperatureLow"])),  font=font, fill=255)
+    draw.text((x + 90, top + 10), u"°C",  font=fonts, fill=255)
+    show_image()
+    time.sleep(segundos_x_pantalla)
+
+    # Tomorrow apparent Low temperature
+    clear_image()
+    draw.text((x, top), u'Mañana mínima:',  font=fontxs, fill=255)
+    draw.text((x + 5, top + 2), str(int(result["daily"]["data"][1]["apparentTemperatureLow"])),  font=font, fill=255)
+    draw.text((x + 90, top + 10), u"°C",  font=fonts, fill=255)
+    draw.text((x + 90, top + 37), "st",  font=fonts, fill=255)
+    show_image()
+    time.sleep(segundos_x_pantalla)
+
+    # Week summary
+    scroll = 0
+    (font_size_x, font_size_y) = fonts2.getsize(result["daily"]["summary"])
+    while -1*scroll <= font_size_x:
+        clear_image()
+        draw.text((x, top), u'Resumen semanal:',  font=fontxs, fill=255)
+        draw.text((x + 4 + scroll, top + 18), result["daily"]["summary"],  font=fonts2, fill=255)
+        show_image()
+        scroll -= 15
+        time.sleep(.1)
 
 while True:
     display_clock()
