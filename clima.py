@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import time
 import datetime
 import requests
@@ -48,7 +49,7 @@ x = 0
 x_scroll = 0
 
 # Tiempo por pantalla
-segundos_x_pantalla = 10
+segundos_x_pantalla = 3
 
 # CLIMA (GET YOUR API KEY: https://darksky.net/dev/docs)
 f_api_key   = open("api_key.txt", "r")
@@ -73,24 +74,22 @@ def show_image(img=image):
 
 # FUNCION PARA MOSTRAR RELOJ
 def display_clock():
-    count    = 0
-    fontsize = 42
-    font     = ImageFont.truetype('ptmono.ttf', fontsize)
+    global segundos_x_pantalla
+    fontsize = 50
+    font     = ImageFont.truetype('./UbuntuMono-Bold.ttf', fontsize)
 
-    while count <= segundos_x_pantalla:
-        clear_image()
-        now = datetime.datetime.now()
-        draw.text((x, top + 10), now.strftime("%d/%m"),  font=font, fill=255)
-        show_image()
-        time.sleep(2)
+    # Show date
+    clear_image()
+    now = datetime.datetime.now()
+    draw.text((x + 2, top + 5), now.strftime("%d/%m"),  font=font, fill=255)
+    show_image()
+    time.sleep(segundos_x_pantalla)
 
-        clear_image()
-        draw.text((x, top + 10), now.strftime("%H:%M"),  font=font, fill=255)
-        show_image()
-        time.sleep(2)
-
-        # Incremento 4 porque mostre 2 cosas por 2 segundos
-        count += 4
+    # Show time
+    clear_image()
+    draw.text((x + 2, top + 5), now.strftime("%H:%M"),  font=font, fill=255)
+    show_image()
+    time.sleep(segundos_x_pantalla)
 
 # FUNCIONES PARA MOSTRAR CLIMA
 def update_clima():
@@ -104,34 +103,33 @@ def update_clima():
         timer_start = time.time()
 
 def display_clima():
-    global result
-    count    = 0
-    fontsize = 60
+    global result, segundos_x_pantalla;
+    fontsize = 75
     fontsizes = 30
-    font     = ImageFont.truetype('ptmono.ttf', fontsize)
-    fonts     = ImageFont.truetype('ptmono.ttf', fontsizes)
+    font     = ImageFont.truetype('./UbuntuMono-Bold.ttf', fontsize)
+    fonts    = ImageFont.truetype('./UbuntuMono-Bold.ttf', fontsizes)
 
     icon = Image.open('icons/' + result["currently"]["icon"] + '.ppm').convert('1')
 
-    while count <= segundos_x_pantalla:
-        clear_image()
-        show_image(icon)
-        time.sleep(2)
+    # Show icon
+    clear_image()
+    show_image(icon)
+    time.sleep(segundos_x_pantalla)
 
-        clear_image()
-        draw.text((x + 2, top + 5), str(int(result["currently"]["temperature"])),  font=font, fill=255)
-        draw.text((x + 90, top + 8), "C",  font=fonts, fill=255)
-        show_image()
-        time.sleep(2)
+    # Current temperature
+    clear_image()
+    draw.text((x + 5, top - 3), str(int(result["currently"]["temperature"])),  font=font, fill=255)
+    draw.text((x + 90, top + 8), u"°C",  font=fonts, fill=255)
+    show_image()
+    time.sleep(segundos_x_pantalla)
 
-        clear_image()
-        draw.text((x + 2, top + 5), str(int(result["currently"]["apparentTemperature"])),  font=font, fill=255)
-        draw.text((x + 90, top + 8), "C",  font=fonts, fill=255)
-        draw.text((x + 90, top + 35), "st",  font=fonts, fill=255)
-        show_image()
-        time.sleep(2)
-
-        count += 5
+    # Current apparent temperature
+    clear_image()
+    draw.text((x + 5, top - 3), str(int(result["currently"]["apparentTemperature"])),  font=font, fill=255)
+    draw.text((x + 90, top + 8), u"°C",  font=fonts, fill=255)
+    draw.text((x + 90, top + 35), "st",  font=fonts, fill=255)
+    show_image()
+    time.sleep(segundos_x_pantalla)
 
 while True:
     display_clock()
