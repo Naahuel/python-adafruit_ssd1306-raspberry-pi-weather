@@ -54,7 +54,8 @@ segundos_x_pantalla = 10
 f_api_key   = open("api_key.txt", "r")
 api_key     = f_api_key.read()
 f_api_key.close()
-fetchUrl    = "https://api.darksky.net/forecast/"+api_key+"/-26.830139,-65.225670?units=si"
+location    = "-26.830139,-65.225670"
+fetchUrl    = "https://api.darksky.net/forecast/"+api_key+"/"+location+"?units=si"
 result      = False
 timer_start = time.time()
 timer_end   = time.time()
