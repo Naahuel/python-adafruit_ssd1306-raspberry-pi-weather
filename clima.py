@@ -74,7 +74,7 @@ def show_image(img=image):
 def display_clock():
     count    = 0
     fontsize = 42
-    font     = ImageFont.truetype('/home/pi/oled_display/ptmono.ttf', fontsize)
+    font     = ImageFont.truetype('ptmono.ttf', fontsize)
 
     while count <= segundos_x_pantalla:
         clear_image()
@@ -107,10 +107,10 @@ def display_clima():
     count    = 0
     fontsize = 60
     fontsizes = 30
-    font     = ImageFont.truetype('/home/pi/oled_display/ptmono.ttf', fontsize)
-    fonts     = ImageFont.truetype('/home/pi/oled_display/ptmono.ttf', fontsizes)
+    font     = ImageFont.truetype('ptmono.ttf', fontsize)
+    fonts     = ImageFont.truetype('ptmono.ttf', fontsizes)
 
-    icon = Image.open(result["currently"]["icon"] + '.ppm').convert('1')
+    icon = Image.open('icons/' + result["currently"]["icon"] + '.ppm').convert('1')
 
     while count <= segundos_x_pantalla:
         clear_image()
