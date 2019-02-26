@@ -56,7 +56,7 @@ f_api_key   = open("api_key.txt", "r")
 api_key     = f_api_key.read()
 f_api_key.close()
 location    = "-26.830139,-65.225670"
-fetchUrl    = "https://api.darksky.net/forecast/"+api_key+"/"+location+"?units=si"
+fetchUrl    = "https://api.darksky.net/forecast/"+api_key+"/"+location+"?units=si&lang=es"
 result      = False
 timer_start = time.time()
 timer_end   = time.time()
