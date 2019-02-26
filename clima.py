@@ -181,13 +181,14 @@ def display_clima():
     # Week summary
     scroll = 0
     (font_size_x, font_size_y) = fonts2.getsize(result["daily"]["summary"])
-    while -1*scroll <= font_size_x:
+    (char_width, _) = fonts2.getsize("a");
+    while -1*scroll <= (font_size_x + char_width + width):
         clear_image()
         draw.text((x, top), u'Resumen semanal:',  font=fontxs, fill=255)
-        draw.text((x + 4 + scroll, top + 18), result["daily"]["summary"],  font=fonts2, fill=255)
+        draw.text((x + width + scroll, top + 18), result["daily"]["summary"],  font=fonts2, fill=255)
         show_image()
-        scroll -= 15
-        time.sleep(.1)
+        scroll -= char_width
+        time.sleep(.25)
 
 while True:
     display_clock()
